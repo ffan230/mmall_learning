@@ -15,6 +15,8 @@ public class TokenCache {
 
     private static Logger logger = LoggerFactory.getLogger(TokenCache.class);
 
+    public static final String TOKEN_PREFIX = "token_";
+
     //设置缓存的初始化容量为1000,
     //LRU算法（最少使用算法，移除缓存项）
     private static LoadingCache<String,String> localCache = CacheBuilder.newBuilder().initialCapacity(1000).maximumSize(10000).expireAfterAccess(12, TimeUnit.HOURS)
@@ -22,7 +24,7 @@ public class TokenCache {
                 //默认的数据加载实现，当调用get取值的时候，如果key没有对应的值，就调用这个方法进行加载。
                 @Override
                 public String load(String s) throws Exception {
-                    //为了避免不必要的异常，当key.echo这个key为null时，就会报一个空指针
+                    //为了避免不必要的异常，当key.equal这个key为null时，就会报一个空指针
                     return "null";
                 }
             });
