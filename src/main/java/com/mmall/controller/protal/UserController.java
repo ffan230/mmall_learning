@@ -97,6 +97,22 @@ public class UserController {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
         return iUserService.resetPassword(passwordOld,passwordNew,user);
+    }
 
+    @RequestMapping(value = "update_information.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<User> updateInformation(HttpSession session,User user){
+        User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
+        if(currentUser==null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        user.setId(currentUser.getId());
+        user.setUsername(currentUser.getUsername());
+        ServerResponse<User> response = iUserService.updateInformation(user);
+        if(response.isSuccess()){
+            response.getData().setUsername(currentUser.getUsername());
+            session.setAttribute(Const.CURRENT_USER,response.getData());
+        }
+        return response;
     }
 }
