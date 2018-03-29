@@ -165,7 +165,7 @@
     <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        form mmall_user
+        from mmall_user
         where username=#{username}
         and password=#{password}
     </select>
@@ -188,7 +188,7 @@
 
     <update id="updatePasswordByUsername" parameterType="map">
     UPDATE mmall_user
-    SET password = #{passwordNew} , update_time = now();
+    SET password = #{passwordNew} , update_time = now()
     where username = #{username}
   </update>
 
